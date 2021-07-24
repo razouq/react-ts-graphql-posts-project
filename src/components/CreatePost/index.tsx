@@ -1,11 +1,29 @@
 import React, { useState } from "react";
+import { useMutation, gql } from "@apollo/client";
+
+interface Post {
+  id: number;
+  title: string;
+  content: string;
+}
+
+const CREATE_POST = gql`
+  mutation createPost($title: String!, $content: String!) {
+    createPost(title: $title, content: $content) {
+      title
+      content
+    }
+  }
+`;
 
 const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [createPost, { error, data }] = useMutation<Post>(CREATE_POST);
+
   const onSumit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(title, content);
+    createPost({ variables: { title, content } });
   };
   return (
     <div>
