@@ -1,4 +1,3 @@
-import React from "react";
 import { useSubscription, gql } from "@apollo/client";
 interface Post {
   id: number;

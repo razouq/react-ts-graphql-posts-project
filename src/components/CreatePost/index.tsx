@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useMutation, gql } from "@apollo/client";
+import { useHistory } from "react-router-dom";
 
 interface Post {
   id: number;
@@ -21,9 +22,11 @@ const CreatePost = () => {
   const [content, setContent] = useState("");
   const [createPost, { error, data }] = useMutation<Post>(CREATE_POST);
 
+  const history = useHistory();
   const onSumit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     createPost({ variables: { title, content } });
+    history.push("/");
   };
   return (
     <div>
